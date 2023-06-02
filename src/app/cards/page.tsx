@@ -12,10 +12,15 @@ import {
 } from 'firebase/firestore';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import TinderCard from 'react-tinder-card';
 import { useWindowSize } from 'react-use';
-
 import Confetti from 'react-confetti';
+
+let TinderCard: any;
+try {
+  TinderCard = require('react-tinder-card');
+} catch (error) {
+  TinderCard = null;
+}
 
 type CardType = {
   userId: string;
