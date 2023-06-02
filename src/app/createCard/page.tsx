@@ -20,7 +20,6 @@ export default function CreateCard() {
     reset,
     formState: { errors },
   } = useForm<FormData>();
-
   const user = useUserStore(state => state.user);
 
   const [messagesuccess, setMessagesuccess] = useState(false);
@@ -35,13 +34,15 @@ export default function CreateCard() {
   };
 
   const onSubmit = (data: FormData) => {
-    saveUserData(user.uid, data);
-    reset();
-    setMessagesuccess(true);
+    if (user) {
+      saveUserData(user.uid, data);
+      reset();
+      setMessagesuccess(true);
 
-    setTimeout(() => {
-      setMessagesuccess(false);
-    }, 2000);
+      setTimeout(() => {
+        setMessagesuccess(false);
+      }, 2000);
+    }
   };
 
   return (
