@@ -107,7 +107,10 @@ export default function Cards() {
             <h2 className='text-4xl font-extrabold dark:text-white text-center'>
               Вы повторили все слова!
             </h2>
-            <Confetti width={width} height={height} />
+            <Confetti
+              width={typeof window !== 'undefined' ? width : 1000}
+              height={typeof window !== 'undefined' ? height : 1000}
+            />
           </div>
         )}
       </div>
