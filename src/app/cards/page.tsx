@@ -1,19 +1,14 @@
 'use client';
 
 import ButtonBack from '@/components/ButtonBack';
-import { app } from '@/lib/firebase';
-import useUserStore from '@/store/store';
-import {
-  getFirestore,
-  collection,
-  query,
-  where,
-  getDocs,
-} from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+import useLocalStorageUser from '@/hooks/useLocalStorageUser';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { useWindowSize } from 'react-use';
 import Confetti from 'react-confetti';
+import { useRouter } from 'next/navigation';
 
 let TinderCard: any;
 try {
@@ -32,12 +27,10 @@ type CardType = {
 };
 
 export default function Cards() {
-  const db = getFirestore(app);
-  const userCollectionRef = collection(db, 'users');
-  const user = useUserStore(state => state.user);
   const [cards, setCards] = useState<CardType[]>([]);
   const [loading, setLoading] = useState(true);
   const { width, height } = useWindowSize();
+  const router = useRouter();
 
   const [currentIndex, setCurrentIndex] = useState(1);
   const currentIndexRef = useRef(currentIndex);
@@ -46,30 +39,39 @@ export default function Cards() {
     setCurrentIndex(val);
     currentIndexRef.current = val;
   };
-
+  const { user } = useLocalStorageUser();
   const canSwipe = currentIndex >= 0;
-
-  const swiped = (index: number) => {
-    updateCurrentIndex(index - 1);
-  };
 
   useEffect(() => {
     const getUserCards = async () => {
-      if (user?.uid) {
-        const q = query(userCollectionRef, where('userId', '==', user?.uid));
-        const querySnapshot = await getDocs(q);
-        if (!querySnapshot.empty) {
-          querySnapshot.forEach(doc => {
-            const userData = doc.data() as CardType;
-            setCards(prevState => [...prevState, userData]);
-            setLoading(false);
-          });
+      const userCollectionRef = collection(db, 'users');
+      if (user) {
+        try {
+          const q = query(userCollectionRef, where('userId', '==', user.uid));
+          const querySnapshot = await getDocs(q);
+          if (!querySnapshot.empty) {
+            const userData = querySnapshot.docs.map(doc => {
+              return doc.data() as CardType;
+            });
+
+            setCards(userData);
+          }
+        } catch (e) {
+          console.log(e);
+        } finally {
+          setLoading(false);
         }
+      } else {
+        router.push('/');
       }
     };
 
     getUserCards();
-  }, [user?.uid]);
+  }, [router, user]);
+
+  const swiped = (index: number) => {
+    updateCurrentIndex(index - 1);
+  };
 
   if (loading) return <p>Loading...</p>;
 

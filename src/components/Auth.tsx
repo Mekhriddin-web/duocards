@@ -1,25 +1,9 @@
-import { useEffect } from 'react';
-import {
-  getAuth,
-  signInWithPopup,
-  GoogleAuthProvider,
-  signOut,
-} from 'firebase/auth';
-import { app } from '@/lib/firebase';
-import useUserStore from '@/store/store';
+import { signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
+import useLocalStorageUser from '@/hooks/useLocalStorageUser';
 
 export default function Auth() {
-  const auth = getAuth(app);
-  const user = useUserStore(state => state.user);
-  const addUser = useUserStore(state => state.addUser);
-
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      addUser(user);
-    });
-
-    return () => unsubscribe();
-  }, [auth, addUser]);
+  const { user } = useLocalStorageUser();
 
   const handleLogin = async () => {
     const provider = new GoogleAuthProvider();

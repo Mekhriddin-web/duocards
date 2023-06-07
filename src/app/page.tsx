@@ -1,14 +1,15 @@
 'use client';
 
 import Auth from '@/components/Auth';
-import useUserStore from '@/store/store';
+import useLocalStorageUser from '@/hooks/useLocalStorageUser';
 import Link from 'next/link';
 
 export default function Home() {
-  const user = useUserStore(state => state.user);
+  const { user } = useLocalStorageUser();
+
   return (
     <div>
-      {user?.uid ? (
+      {user ? (
         <div>
           <Link
             href='/cards'

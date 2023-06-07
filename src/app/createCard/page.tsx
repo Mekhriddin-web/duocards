@@ -1,11 +1,11 @@
 'use client';
 
-import { app } from '@/lib/firebase';
+import { db } from '@/lib/firebase';
 import { useForm } from 'react-hook-form';
-import { addDoc, collection, getFirestore } from 'firebase/firestore';
-import useUserStore from '@/store/store';
+import { addDoc, collection } from 'firebase/firestore';
 import { useState } from 'react';
 import ButtonBack from '@/components/ButtonBack';
+import useLocalStorageUser from '@/hooks/useLocalStorageUser';
 
 type FormData = {
   word: string;
@@ -20,12 +20,12 @@ export default function CreateCard() {
     reset,
     formState: { errors },
   } = useForm<FormData>();
-  const user = useUserStore(state => state.user);
+
+  const { user } = useLocalStorageUser();
 
   const [messagesuccess, setMessagesuccess] = useState(false);
 
   const saveUserData = async (userId: string, data: FormData) => {
-    const db = getFirestore(app);
     const userCollectionRef = collection(db, 'users');
     await addDoc(userCollectionRef, {
       userId,
@@ -113,7 +113,15 @@ export default function CreateCard() {
         >
           Сохранить
         </button>
-
+        {!user ? (
+          <div className='bg-red-100 rounded-md p-3 flex'>
+            <div className='text-red-700'>
+              <div className='font-bold text-xl'>
+                Вы должны войти в свой аккаунт
+              </div>
+            </div>
+          </div>
+        ) : null}
         {messagesuccess ? (
           <div className='bg-green-100 rounded-md p-3 flex'>
             <svg
