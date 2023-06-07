@@ -6,16 +6,24 @@ function useLocalStorageUser() {
   const [user, setUser] = useState<User | null>(getUserFromLocalStorage());
 
   function addUserToLocalStorage(user: User) {
-    localStorage.setItem('user', JSON.stringify(user));
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('user', JSON.stringify(user));
+    }
   }
 
   function removeUserFromLocalStorage() {
-    localStorage.removeItem('user');
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('user');
+    }
   }
 
   function getUserFromLocalStorage() {
-    const userFromLocalStorage = localStorage.getItem('user');
-    return userFromLocalStorage ? JSON.parse(userFromLocalStorage) : null;
+    if (typeof localStorage !== 'undefined') {
+      const userFromLocalStorage = localStorage.getItem('user');
+      return userFromLocalStorage ? JSON.parse(userFromLocalStorage) : null;
+    }
+
+    return null;
   }
 
   useEffect(() => {
