@@ -1,20 +1,18 @@
 import { auth } from '@/lib/firebase';
+import useUserStore from '@/store/store';
 import { User, onAuthStateChanged } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 
 function useLocalStorageUser() {
   const [user, setUser] = useState<User | null>(getUserFromLocalStorage());
+  const { user: userServer, addUser } = useUserStore(state => state);
 
   function addUserToLocalStorage(user: User) {
-    if (typeof localStorage !== 'undefined') {
-      localStorage.setItem('user', JSON.stringify(user));
-    }
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   function removeUserFromLocalStorage() {
-    if (typeof localStorage !== 'undefined') {
-      localStorage.removeItem('user');
-    }
+    localStorage.removeItem('user');
   }
 
   function getUserFromLocalStorage() {
@@ -22,8 +20,7 @@ function useLocalStorageUser() {
       const userFromLocalStorage = localStorage.getItem('user');
       return userFromLocalStorage ? JSON.parse(userFromLocalStorage) : null;
     }
-
-    return null;
+    return userServer;
   }
 
   useEffect(() => {
@@ -34,9 +31,17 @@ function useLocalStorageUser() {
 
     const unsubscribe = onAuthStateChanged(auth, user => {
       if (user) {
-        addUserToLocalStorage(user);
+        if (typeof localStorage !== 'undefined') {
+          addUserToLocalStorage(user);
+        } else {
+          addUser(user);
+        }
       } else {
-        removeUserFromLocalStorage();
+        if (typeof localStorage !== 'undefined') {
+          removeUserFromLocalStorage();
+        } else {
+          addUser(null);
+        }
       }
 
       updateUser();
