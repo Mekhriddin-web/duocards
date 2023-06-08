@@ -4,8 +4,8 @@ import { User, onAuthStateChanged } from 'firebase/auth';
 import { useEffect, useState } from 'react';
 
 function useLocalStorageUser() {
-  const [user, setUser] = useState<User | null>(getUserFromLocalStorage());
   const { user: userServer, addUser } = useUserStore(state => state);
+  const [user, setUser] = useState<User | null>(getUserFromLocalStorage());
 
   function addUserToLocalStorage(user: User) {
     localStorage.setItem('user', JSON.stringify(user));
