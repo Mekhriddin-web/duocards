@@ -83,15 +83,15 @@ export default function Cards() {
           cards.map((card, key) => (
             <TinderCard className='swipe' key={key} onSwipe={() => swiped(key)}>
               <div
-                className='card max-w-[600px] w-full mb-4 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700'
+                className='card max-w-[600px] w-full mb-4 p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100'
                 key={key}
               >
                 <div>
-                  <h2 className='mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white'>
+                  <h2 className='mb-2 text-2xl font-bold tracking-tight text-gray-900'>
                     {card.data.word}
                   </h2>
                   <p>{card.data.wordTranslation}</p>
-                  <p className='font-normal text-gray-700 dark:text-gray-400'>
+                  <p className='font-normal text-gray-700'>
                     {card.data.exapleOfUsage}
                   </p>
                 </div>
@@ -111,7 +111,7 @@ export default function Cards() {
         )}
         {!canSwipe && (
           <div>
-            <h2 className='text-4xl font-extrabold dark:text-white text-center'>
+            <h2 className='text-4xl font-extrabold text-black text-center'>
               Вы повторили все слова!
             </h2>
             <Confetti width={width} height={height} />
