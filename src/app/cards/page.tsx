@@ -2,13 +2,13 @@
 
 import ButtonBack from '@/components/ButtonBack';
 import { db } from '@/lib/firebase';
-import useLocalStorageUser from '@/hooks/useLocalStorageUser';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { useWindowSize } from 'react-use';
 import Confetti from 'react-confetti';
 import { useRouter } from 'next/navigation';
+import useUserStore from '@/store/store';
 
 let TinderCard: any;
 try {
@@ -39,15 +39,18 @@ export default function Cards() {
     setCurrentIndex(val);
     currentIndexRef.current = val;
   };
-  const { user } = useLocalStorageUser();
+  const { userProfile } = useUserStore(state => state);
   const canSwipe = currentIndex >= 0;
 
   useEffect(() => {
     const getUserCards = async () => {
       const userCollectionRef = collection(db, 'users');
-      if (user) {
+      if (userProfile) {
         try {
-          const q = query(userCollectionRef, where('userId', '==', user.uid));
+          const q = query(
+            userCollectionRef,
+            where('userId', '==', userProfile.uid)
+          );
           const querySnapshot = await getDocs(q);
           if (!querySnapshot.empty) {
             const userData = querySnapshot.docs.map(doc => {
@@ -67,7 +70,7 @@ export default function Cards() {
     };
 
     getUserCards();
-  }, [router, user]);
+  }, [router, userProfile]);
 
   const swiped = (index: number) => {
     updateCurrentIndex(index - 1);

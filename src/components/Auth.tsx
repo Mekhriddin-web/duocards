@@ -1,9 +1,31 @@
-import { signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth';
+import {
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut,
+  onAuthStateChanged,
+} from 'firebase/auth';
 import { auth } from '@/lib/firebase';
-import useLocalStorageUser from '@/hooks/useLocalStorageUser';
+import { useEffect, useState } from 'react';
+import useUserStore from '@/store/store';
 
 export default function Auth() {
-  const { user } = useLocalStorageUser();
+  const { userProfile, addUser, removeUser } = useUserStore(state => state);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      if (user) {
+        addUser(user);
+      } else {
+        removeUser();
+      }
+    });
+    setIsLoading(false);
+
+    return () => {
+      unsubscribe();
+    };
+  }, [addUser, removeUser]);
 
   const handleLogin = async () => {
     const provider = new GoogleAuthProvider();
@@ -22,9 +44,11 @@ export default function Auth() {
     }
   };
 
+  if (isLoading) return <p>Loading...</p>;
+
   return (
     <>
-      {user ? (
+      {userProfile ? (
         <button
           className='bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow'
           onClick={handleLogout}

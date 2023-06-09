@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { addDoc, collection } from 'firebase/firestore';
 import { useState } from 'react';
 import ButtonBack from '@/components/ButtonBack';
-import useLocalStorageUser from '@/hooks/useLocalStorageUser';
+import useUserStore from '@/store/store';
 
 type FormData = {
   word: string;
@@ -21,7 +21,7 @@ export default function CreateCard() {
     formState: { errors },
   } = useForm<FormData>();
 
-  const { user } = useLocalStorageUser();
+  const { userProfile } = useUserStore();
 
   const [messagesuccess, setMessagesuccess] = useState(false);
 
@@ -34,8 +34,8 @@ export default function CreateCard() {
   };
 
   const onSubmit = (data: FormData) => {
-    if (user) {
-      saveUserData(user.uid, data);
+    if (userProfile) {
+      saveUserData(userProfile.uid, data);
       reset();
       setMessagesuccess(true);
 
@@ -113,7 +113,7 @@ export default function CreateCard() {
         >
           Сохранить
         </button>
-        {!user ? (
+        {!userProfile ? (
           <div className='bg-red-100 rounded-md p-3 flex'>
             <div className='text-red-700'>
               <div className='font-bold text-xl'>

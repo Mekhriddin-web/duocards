@@ -1,15 +1,23 @@
 'use client';
 
 import Auth from '@/components/Auth';
-import useLocalStorageUser from '@/hooks/useLocalStorageUser';
+import useUserStore from '@/store/store';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
-  const { user } = useLocalStorageUser();
+  const { userProfile } = useUserStore(state => state);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, [userProfile]);
+
+  if (isLoading) return <p>Loading....</p>;
 
   return (
     <div>
-      {user ? (
+      {userProfile ? (
         <div>
           <Link
             href='/cards'
