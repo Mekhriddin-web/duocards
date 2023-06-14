@@ -112,7 +112,7 @@ export default function Cards({ params }: { params: { id: string } }) {
                 className={`card text-black ${
                   card.color === 'white' && 'bg-white'
                 } ${card.color === 'green' && 'bg-lime-400'} ${
-                  card.color === 'red' && 'bg-rose-600'
+                  card.color === 'red' && 'bg-rose-600 text-white'
                 } ${card.color === 'yellow' && 'bg-yellow-400'} ${
                   card.color === 'black' && 'bg-black text-white'
                 }`}
