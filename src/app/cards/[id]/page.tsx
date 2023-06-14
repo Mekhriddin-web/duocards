@@ -97,7 +97,7 @@ export default function Cards({ params }: { params: { id: string } }) {
         {cards.length > 0 ? (
           cards.map((card, key) => (
             <TinderCard
-              className='swipe pressable'
+              className='swipe'
               key={card.id}
               onSwipe={() => swiped(key)}
               preventSwipe={
@@ -117,7 +117,6 @@ export default function Cards({ params }: { params: { id: string } }) {
                   card.color === 'black' && 'bg-black text-white'
                 }`}
                 key={key}
-                onClick={() => ubdateFlipArray(key)}
               >
                 <div
                   className={`card-inner p-6 text-center ${
@@ -134,7 +133,10 @@ export default function Cards({ params }: { params: { id: string } }) {
                     </div>
                   ) : (
                     <div className='card-front'>
-                      <h2 className='mb-2 text-2xl font-bold tracking-tight'>
+                      <h2
+                        className='mb-2 text-2xl font-bold tracking-tight pressable'
+                        onClick={() => ubdateFlipArray(key)}
+                      >
                         {card.word}
                       </h2>
                     </div>
