@@ -20,6 +20,10 @@ body {
   position: absolute;
 }
 
+.swipe {
+  position: absolute;
+}
+
 .cardContainer {
   width: 90vw;
   max-width: 260px;
@@ -28,7 +32,7 @@ body {
 
 .card {
   position: relative;
-  z-index: 2;
+  /* z-index: 2; */
   cursor: pointer;
   border-radius: 20px;
   width: 80vw;

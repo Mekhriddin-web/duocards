@@ -72,7 +72,7 @@ export default function Cards({ params }: { params: { id: string } }) {
     getUserCards();
 
     setIsFlipArray(new Array(cards.length).fill(false));
-  }, [router, userProfile, cards.length]);
+  }, [router, userProfile, cards.length, params.id]);
 
   const swiped = (index: number) => {
     updateCurrentIndex(index - 1);
@@ -97,15 +97,14 @@ export default function Cards({ params }: { params: { id: string } }) {
         {cards.length > 0 ? (
           cards.map((card, key) => (
             <TinderCard
-              className='swipe'
+              className='swipe pressable'
               key={card.id}
               onSwipe={() => swiped(key)}
-              // preventSwipe={
-              //   isFlipArray[key]
-              //     ? ['up', 'down']
-              //     : ['up', 'down', 'left', 'right']
-              // }
-              // swipeRequirementType='position'
+              preventSwipe={
+                isFlipArray[key]
+                  ? ['up', 'down']
+                  : ['up', 'down', 'left', 'right']
+              }
               onSwipeRequirementFulfilled={(dir: string) => out(dir)}
             >
               <div
@@ -117,7 +116,7 @@ export default function Cards({ params }: { params: { id: string } }) {
                   card.color === 'black' && 'bg-black text-white'
                 }`}
                 key={key}
-                // onClick={() => ubdateFlipArray(key)}
+                onClick={() => ubdateFlipArray(key)}
               >
                 <div
                   className={`card-inner p-6 text-center ${
