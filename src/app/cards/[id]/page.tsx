@@ -100,11 +100,11 @@ export default function Cards({ params }: { params: { id: string } }) {
               className='swipe'
               key={card.id}
               onSwipe={() => swiped(key)}
-              preventSwipe={
-                isFlipArray[key]
-                  ? ['up', 'down']
-                  : ['up', 'down', 'left', 'right']
-              }
+              // preventSwipe={
+              //   isFlipArray[key]
+              //     ? ['up', 'down']
+              //     : ['up', 'down', 'left', 'right']
+              // }
               swipeRequirementType='position'
               onSwipeRequirementFulfilled={(dir: string) => out(dir)}
             >
@@ -117,6 +117,7 @@ export default function Cards({ params }: { params: { id: string } }) {
                   card.color === 'black' && 'bg-black text-white'
                 }`}
                 key={key}
+                // onClick={() => ubdateFlipArray(key)}
               >
                 <div
                   className={`card-inner p-6 text-center ${
@@ -135,7 +136,6 @@ export default function Cards({ params }: { params: { id: string } }) {
                     <div className='card-front'>
                       <h2
                         className='mb-2 text-2xl font-bold tracking-tight pressable'
-                        onClick={() => ubdateFlipArray(key)}
                       >
                         {card.word}
                       </h2>
