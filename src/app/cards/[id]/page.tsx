@@ -105,7 +105,7 @@ export default function Cards({ params }: { params: { id: string } }) {
               //     ? ['up', 'down']
               //     : ['up', 'down', 'left', 'right']
               // }
-              swipeRequirementType='position'
+              // swipeRequirementType='position'
               onSwipeRequirementFulfilled={(dir: string) => out(dir)}
             >
               <div
