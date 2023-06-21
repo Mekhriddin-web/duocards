@@ -4,13 +4,22 @@ import Auth from '@/components/Auth';
 import useUserStore from '@/store/store';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { collection, doc, getDoc, getDocs, query } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDocs, query } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
 export default function Home() {
   const { userProfile } = useUserStore(state => state);
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState<string[]>([]);
+
+  const deleteCategory = async (category: string) => {
+    if (userProfile) {
+      await deleteDoc(doc(db, userProfile.uid, category));
+      const newCategories = categories.filter(item => item !== category);
+
+      setCategories(newCategories);
+    }
+  }
 
   useEffect(() => {
     const getCategory = async () => {
@@ -54,11 +63,16 @@ export default function Home() {
                         Категория: {category}
                       </h2>
                       <Link
-                        href={`/cards/${category}`}
+                        href={`/cards/${encodeURIComponent(category)}`}
                         className='block text-center mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
                       >
                         Начать учить слова
                       </Link>
+                      <button
+                        className='block w-full text-center mb-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
+                        onClick={() => deleteCategory(category)}>
+                        Удалить категорию 
+                      </button>
                     </div>
                   );
                 })

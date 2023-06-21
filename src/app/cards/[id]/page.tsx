@@ -44,7 +44,7 @@ export default function Cards({ params }: { params: { id: string } }) {
   useEffect(() => {
     const getUserCards = async () => {
       if (userProfile) {
-        const docRef = doc(db, userProfile.uid, params.id);
+        const docRef = doc(db, userProfile.uid, decodeURIComponent(params.id));
 
         try {
           const docSnap = await getDoc(docRef);
