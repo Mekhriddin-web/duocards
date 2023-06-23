@@ -74,9 +74,10 @@ export default function Cards({ params }: { params: { id: string } }) {
     setIsFlipArray(new Array(cards.length).fill(false));
   }, [router, userProfile, cards.length, params.id]);
 
-  const swiped = (index: number) => {
+  const swiped = (dir: string, index: number) => {
     updateCurrentIndex(index - 1);
     setCardDirection('');
+    out(dir);
   };
 
   const out = (dir: string) => {
@@ -99,13 +100,14 @@ export default function Cards({ params }: { params: { id: string } }) {
             <TinderCard
               className='swipe pressable'
               key={card.id}
-              onSwipe={() => swiped(key)}
+              onSwipe={(dir: string) => swiped(dir, key)}
               preventSwipe={
                 isFlipArray[key]
                   ? ['up', 'down']
                   : ['up', 'down', 'left', 'right']
               }
-              onSwipeRequirementFulfilled={(dir: string) => out(dir)}
+              // onSwipeRequirementFulfilled={(dir: string) => out(dir)}
+              // onCardLeftScreen={(dir: string) => out(dir)}
             >
               <div
                 className={`card text-black ${
@@ -133,9 +135,7 @@ export default function Cards({ params }: { params: { id: string } }) {
                     </div>
                   ) : (
                     <div className='card-front'>
-                      <h2
-                        className='mb-2 text-2xl font-bold tracking-tight pressable'
-                      >
+                      <h2 className='mb-2 text-2xl font-bold tracking-tight pressable'>
                         {card.word}
                       </h2>
                     </div>
