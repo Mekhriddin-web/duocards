@@ -53,14 +53,14 @@ export default function Auth() {
           className='bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow'
           onClick={handleLogout}
         >
-          Выйти из аккаунта
+          Sign out
         </button>
       ) : (
         <button
           className='bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow'
           onClick={handleLogin}
         >
-          Зарегистрироваться
+          Sign in
         </button>
       )}
     </>

@@ -106,8 +106,6 @@ export default function Cards({ params }: { params: { id: string } }) {
                   ? ['up', 'down']
                   : ['up', 'down', 'left', 'right']
               }
-              // onSwipeRequirementFulfilled={(dir: string) => out(dir)}
-              // onCardLeftScreen={(dir: string) => out(dir)}
             >
               <div
                 className={`card text-black ${
@@ -141,35 +139,26 @@ export default function Cards({ params }: { params: { id: string } }) {
                     </div>
                   )}
                 </div>
-
-                {cardDirection === 'right' && isFlipArray[key] && (
-                  <div className='absolute top-2 left-2 z-10 bg-green-100 rounded-md p-3 text-green-700'>
-                    Знаю
-                  </div>
-                )}
-                {cardDirection === 'left' && isFlipArray[key] && (
-                  <div className='absolute top-2 right-2  z-10 bg-red-100 rounded-md p-3 text-red-700'>
-                    Учить сново
-                  </div>
-                )}
               </div>
             </TinderCard>
           ))
         ) : (
           <div>
-            <p className='text-center mb-4'>у вас нет пока слов</p>
+            <p className='text-center mb-4'>
+              You don&apos;t have the words yet.
+            </p>
             <Link
               href='/createCard'
               className='block text-center mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
             >
-              Добавить новое слово
+              Add a new word
             </Link>
           </div>
         )}
         {!canSwipe && (
           <div>
             <h2 className='text-4xl font-extrabold text-black text-center'>
-              Вы повторили все слова!
+              You have repeated all the words!
             </h2>
             <Confetti width={width} height={height} />
           </div>

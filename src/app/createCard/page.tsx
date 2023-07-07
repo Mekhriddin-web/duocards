@@ -73,7 +73,7 @@ export default function CreateCard() {
             className='block text-gray-700 text-sm font-bold mb-2'
             htmlFor='category'
           >
-            Категория
+            Category
           </label>
           <input
             className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline ${
@@ -85,7 +85,7 @@ export default function CreateCard() {
           />
           {errors.category && (
             <p className='text-red-500 text-xs italic'>
-              Это поле обязательное!
+              This field is required!
             </p>
           )}
         </div>
@@ -94,7 +94,7 @@ export default function CreateCard() {
             className='block text-gray-700 text-sm font-bold mb-2'
             htmlFor='word'
           >
-            Слово
+            Word
           </label>
           <input
             className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline ${
@@ -106,7 +106,7 @@ export default function CreateCard() {
           />
           {errors.word && (
             <p className='text-red-500 text-xs italic'>
-              Это поле обязательное!
+              This field is required!
             </p>
           )}
         </div>
@@ -115,7 +115,7 @@ export default function CreateCard() {
             className='block text-gray-700 text-sm font-bold mb-2'
             htmlFor='wordTranslation'
           >
-            Перевод слова
+            Translation of the word
           </label>
           <input
             className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline ${
@@ -127,7 +127,7 @@ export default function CreateCard() {
           />
           {errors.wordTranslation && (
             <p className='text-red-500 text-xs italic'>
-              Это поле обязательное!
+              This field is required!
             </p>
           )}
         </div>
@@ -136,7 +136,7 @@ export default function CreateCard() {
             className='block text-gray-700 text-sm font-bold mb-2'
             htmlFor='exapleOfUsage'
           >
-            Пример использования слова
+            Example of word usage
           </label>
           <textarea
             className='shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
@@ -149,18 +149,18 @@ export default function CreateCard() {
             className='block text-gray-700 text-sm font-bold mb-2'
             htmlFor='colors'
           >
-            Цвет карточки
+            Card colour
           </label>
           <select
             id='colors'
             className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5'
             {...register('color')}
           >
-            <option value='white'>Белая карточка</option>
-            <option value='black'>Черная карточка</option>
-            <option value='red'>Красная карточка</option>
-            <option value='green'>Зеленая карточка</option>
-            <option value='yellow'>Желтая карточка</option>
+            <option value='white'>White card</option>
+            <option value='black'>Black card</option>
+            <option value='red'>Red card</option>
+            <option value='green'>Green card</option>
+            <option value='yellow'>Yellow card</option>
           </select>
         </div>
         <button
@@ -173,7 +173,7 @@ export default function CreateCard() {
           <div className='bg-red-100 rounded-md p-3 flex'>
             <div className='text-red-700'>
               <div className='font-bold text-xl'>
-                Вы должны войти в свой аккаунт
+                You must log in to your account
               </div>
             </div>
           </div>
@@ -193,7 +193,9 @@ export default function CreateCard() {
             </svg>
 
             <div className='text-green-700'>
-              <div className='font-bold text-xl'>Слово успешно сохранено!</div>
+              <div className='font-bold text-xl'>
+                The word has been successfully saved!
+              </div>
             </div>
           </div>
         ) : null}

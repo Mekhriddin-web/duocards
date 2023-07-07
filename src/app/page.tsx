@@ -19,7 +19,7 @@ export default function Home() {
 
       setCategories(newCategories);
     }
-  }
+  };
 
   useEffect(() => {
     const getCategory = async () => {
@@ -60,18 +60,19 @@ export default function Home() {
                       className='block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow'
                     >
                       <h2 className='mb-2 text-2xl font-bold tracking-tight text-gray-900'>
-                        Категория: {category}
+                        Category: {category}
                       </h2>
                       <Link
                         href={`/cards/${encodeURIComponent(category)}`}
                         className='block text-center mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
                       >
-                        Начать учить слова
+                        Start learning the words
                       </Link>
                       <button
                         className='block w-full text-center mb-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'
-                        onClick={() => deleteCategory(category)}>
-                        Удалить категорию 
+                        onClick={() => deleteCategory(category)}
+                      >
+                        Delete category
                       </button>
                     </div>
                   );
@@ -82,13 +83,13 @@ export default function Home() {
             href='/createCard'
             className='block text-center mb-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
           >
-            Добавить новое слово
+            Add a new word
           </Link>
         </div>
       ) : (
         <div className='flex flex-col items-center'>
           <p className='mb-4 text-center'>
-            Вам нужно зарегистрироваться, чтобы начать пользоваться приложением!
+            You need to register to start using the app!
           </p>
           <Auth />
         </div>
