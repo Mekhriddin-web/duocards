@@ -11,7 +11,7 @@ export default function Header() {
         <Image
           src='/logo.svg'
           alt='Izumi it company'
-          className='object-contain h-[30px] md:h-[46px]'
+          className='object-contain w-[160px] h-[80px] md:w-[200px]'
           width={100}
           height={100}
           priority
